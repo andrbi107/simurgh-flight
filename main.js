@@ -98,6 +98,7 @@
   let lives = CFG.startLives, score = 0, valleyIndex = 0, distValley = 0;
   let scrollSpeed = CFG.baseScroll, spawnInterval = CFG.baseSpawn, spawnTimer = 0;
   let feathersCollected = 0, shake = 0, fallT = 0, fallVy = 0, fallRot = 0;
+  let featherStreak = 0, lastFeatherT = 0;           // v0.0.2 — feather-streak shield
   let lastT = performance.now(), runTime = 0, worldScroll = 0;
   let bgLayers = [], motes = [];
 
@@ -107,6 +108,7 @@
     lives = CFG.startLives; score = 0; valleyIndex = 0; distValley = 0;
     scrollSpeed = CFG.baseScroll; spawnInterval = CFG.baseSpawn; spawnTimer = 380;
     feathersCollected = 0; shake = 0; fallT = 0; fallVy = 0; fallRot = 0;
+    featherStreak = 0; lastFeatherT = 0;              // v0.0.2 — reset streak
     victoried = false; runTime = 0;
     recomputeValley();
     updateHud();
@@ -295,6 +297,17 @@
       if (feathersCollected % CFG.feathersPerCompanion === 0 && companions.length < CFG.maxCompanions) {
         companions.push({ x: player.x, y: player.y, ttl: -1, permanent: true, fade: 1 });
       }
+      // v0.0.2 — feather-streak shield: 3 feathers within 4s grant 4s invulnerability
+      const nowF = performance.now();
+      if (nowF - lastFeatherT < 4000) featherStreak++; else featherStreak = 1;
+      lastFeatherT = nowF;
+      if (featherStreak >= 3) {
+        player.invuln = Math.max(player.invuln, 4000);
+        featherStreak = 0;
+        burst(player.x, player.y, COL.gold, 22);
+        beep('comp');
+        if (window.MUX) MUX.bump();
+      }
       burst(e.x, e.y, COL.gold, 10); beep('feather'); entities.splice(i, 1);
     } else if (e.type === 'companion') {
       score += CFG.companionScore;
@@ -308,7 +321,7 @@
     player.invuln = CFG.invulnMs;
     shake = 1;
     beep('hit');
-    if (navigator.vibrate) try { navigator.vibrate(22); } catch (e) {}
+    if (window.MUX) MUX.hit();
     if (lives <= 0) startFall();
     updateHud();
   }
@@ -798,6 +811,7 @@
     elScoreOver.textContent = fa(Math.floor(score));
     elBestOver.textContent = fa(Math.floor(best));
     elValleyOver.textContent = 'رسیده به ' + valleyName();
+    if (window.MUX) MUX.over();
   }
   function showVictory() {
     showScreen(scrVictory);
