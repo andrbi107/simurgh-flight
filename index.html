@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#F3E7CF">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="description" content="سیمرغ: پرواز به قاف - راهنمایی سیمرغ از هفت وادی به کوه قاف">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg">
+<title>سیمرغ: پرواز به قاف</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <canvas id="game" aria-label="بازی سیمرغ"></canvas>
+
+  <div id="hud" hidden>
+    <button id="pause" type="button" aria-label="توقف">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" rx="1" fill="#1B1F3B"/><rect x="9.5" y="2" width="3.5" height="12" rx="1" fill="#1B1F3B"/></svg>
+    </button>
+    <div id="lives" aria-label="پرهای جان"></div>
+    <div id="valley">وادی اول: طلب</div>
+    <div id="score" dir="ltr">۰</div>
+  </div>
+
+  <section id="screen-start" class="screen">
+    <div class="card">
+      <h1>سیمرغ</h1>
+      <p class="sub">پرواز به قاف</p>
+      <p class="desc">سیمرغ را از طریق هفت وادی به کوه قاف برسان؛ از طلب تا فقر و فنا.</p>
+      <p class="best">رکورد: <span id="best-start">۰</span></p>
+      <button id="play" class="btn primary" type="button">آغاز پرواز</button>
+      <p class="hint">حرکت: لمس/کشیدن یا کلیدهای جهت‌دار و A D W S</p>
+    </div>
+  </section>
+
+  <section id="screen-pause" class="screen" hidden>
+    <div class="card">
+      <h2>توقف</h2>
+      <p class="desc">پرواز متوقف شد.</p>
+      <button id="resume" class="btn primary" type="button">ادامه پرواز</button>
+      <button id="quit" class="btn" type="button">شروع دوباره</button>
+    </div>
+  </section>
+
+  <section id="screen-over" class="screen" hidden>
+    <div class="card">
+      <h2>پایان پرواز</h2>
+      <p class="stat">امتیاز: <span id="score-over">۰</span></p>
+      <p class="stat">رکورد: <span id="best-over">۰</span></p>
+      <p class="desc" id="valley-over"></p>
+      <button id="retry" class="btn primary" type="button">دوباره پرواز کن</button>
+    </div>
+  </section>
+
+  <section id="screen-victory" class="screen" hidden>
+    <div class="card">
+      <h2>رسیدی به قاف</h2>
+      <p class="desc">سیمرغ بر قله‌ی کوه قاف نشست. سفر هفت وادی به پایان رسید.</p>
+      <p class="stat">امتیاز: <span id="score-victory">۰</span></p>
+      <p class="stat">رکورد: <span id="best-victory">۰</span></p>
+      <button id="continue-endless" class="btn primary" type="button">پرواز بی‌پایان</button>
+      <button id="retry-victory" class="btn" type="button">شروع دوباره</button>
+    </div>
+  </section>
+</div>
+<script src="main.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js').catch(function () {});
+    });
+  }
+</script>
+</body>
+</html>

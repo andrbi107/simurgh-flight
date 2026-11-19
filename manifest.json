@@ -1,0 +1,14 @@
+{
+  "name": "سیمرغ: پرواز به قاف",
+  "short_name": "سیمرغ",
+  "description": "پرواز سیمرغ از هفت وادی به کوه قاف",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#F3E7CF",
+  "theme_color": "#F3E7CF",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
