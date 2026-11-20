@@ -946,8 +946,11 @@
   addEventListener('resize', resize);
   init();
 })();
-// ---- v0.0.4 gamekit wiring ----
+// ---- v0.0.5 gamekit wiring (splash + menu + stats + leaderboard + auto-update) ----
 if (window.GK) {
+  GK.boot({ title: "Simurgh Flight", tagline: "Flight through seven valleys", theme: "#06121a" });
   GK.help({ title: "Simurgh Flight", objective: "Guide the Simurgh through the seven valleys. Avoid hazards, collect gems.", controls: ["Touch: on-screen joystick to fly","Mouse: move to guide","Space / click: flap","P: pause","F: fullscreen"], tips: "Gems distract - stay focused on the gaps." });
   GK.exposeState(function () { try { return { score: (window.S && window.S.score) || window.score || 0, mode: (window.S && window.S.mode) || 'play', wave: (window.S && window.S.wave) || 0 }; } catch (e) { return {}; } });
+  GK._manualRecord = false;
+  setTimeout(function () { GK.ready(); }, 600);
 }
