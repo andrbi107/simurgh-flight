@@ -1,4 +1,4 @@
-const CACHE = 'simurgh-flight-v2';
+const CACHE = 'simurgh-flight-v3';
 const ASSETS = ['./', './index.html', './mobile-ux.js', './styles.css', './main.js', './manifest.json', './icon.svg'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));

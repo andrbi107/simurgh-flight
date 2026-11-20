@@ -181,6 +181,41 @@
   canvas.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') pointer.active = false; });
   canvas.addEventListener('contextmenu', e => e.preventDefault());
 
+  // ---------- v0.0.3 — on-screen joystick (touch devices) ----------
+  const coarsePointer = (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) || ('ontouchstart' in window);
+  const joyEl = document.getElementById('joy');
+  const joyKnob = joyEl ? joyEl.querySelector('.joy-knob') : null;
+  const joy = { active: false, jx: 0, jy: 0, id: null, cx: 0, cy: 0, radius: 56 };
+  function joyMove(e) {
+    if (!joy.active || e.pointerId !== joy.id) return;
+    var dx = e.clientX - joy.cx, dy = e.clientY - joy.cy;
+    var d = Math.hypot(dx, dy) || 1;
+    var clamped = Math.min(d, joy.radius);
+    joy.jx = (dx / d) * (clamped / joy.radius);
+    joy.jy = (dy / d) * (clamped / joy.radius);
+    if (joyKnob) joyKnob.style.transform = 'translate(' + (joy.jx * joy.radius) + 'px,' + (joy.jy * joy.radius) + 'px)';
+  }
+  function joyStart(e) {
+    if (!coarsePointer || !joyEl) return;
+    var r = joyEl.getBoundingClientRect();
+    joy.cx = r.left + r.width / 2; joy.cy = r.top + r.height / 2; joy.radius = r.width / 2;
+    joy.active = true; joy.id = e.pointerId;
+    try { joyEl.setPointerCapture(e.pointerId); } catch (err) {}
+    joyMove(e);
+    e.preventDefault();
+  }
+  function joyEnd(e) {
+    if (e.pointerId !== joy.id) return;
+    joy.active = false; joy.id = null; joy.jx = 0; joy.jy = 0;
+    if (joyKnob) joyKnob.style.transform = '';
+  }
+  if (joyEl) {
+    joyEl.addEventListener('pointerdown', joyStart);
+    joyEl.addEventListener('pointermove', joyMove);
+    joyEl.addEventListener('pointerup', joyEnd);
+    joyEl.addEventListener('pointercancel', joyEnd);
+  }
+
   // ---------- Player update ----------
   function updatePlayer(dt) {
     const px = player.x, py = player.y;
@@ -194,6 +229,9 @@
     if (kx || ky) {
       dvx = kx * maxV;
       dvy = ky * maxV * 0.82;
+    } else if (joy.active) {                 // v0.0.3 — joystick
+      dvx = joy.jx * maxV;
+      dvy = joy.jy * maxV * 0.82;
     } else if (pointer.active) {
       const t = pointerTarget();
       if (t) {
@@ -798,6 +836,7 @@
   function showScreen(which) {
     scrStart.hidden = true; scrPause.hidden = true; scrOver.hidden = true; scrVictory.hidden = true;
     if (which) which.hidden = false;
+    if (joyEl) joyEl.classList.toggle('show', state === 'playing' && coarsePointer);   // v0.0.3
   }
   function showStart() {
     state = 'start'; showScreen(scrStart);

@@ -57,6 +57,35 @@ body{
 #hud *{pointer-events:none}
 #hud #pause{pointer-events:auto}
 
+/* v0.0.3 — on-screen joystick (touch devices, during play) */
+.joy{
+  position:absolute;
+  left:calc(env(safe-area-inset-left) + 18px);
+  bottom:calc(env(safe-area-inset-bottom) + 24px);
+  width:128px; height:128px;
+  display:none;
+  z-index:6;
+  touch-action:none;
+}
+.joy.show{ display:block; }
+.joy-base{
+  position:absolute; inset:0;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+  border:2px solid rgba(255,255,255,0.22);
+  box-shadow:0 6px 20px rgba(0,0,0,0.35);
+}
+.joy-knob{
+  position:absolute; left:50%; top:50%;
+  width:54px; height:54px; margin:-27px 0 0 -27px;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 35%, #ffe9a8, #e8b73c 70%, #b9851e);
+  border:2px solid rgba(255,255,255,0.5);
+  box-shadow:0 4px 12px rgba(0,0,0,0.4);
+  transition:transform .04s linear;
+  pointer-events:none;
+}
+
 #pause{
   position:absolute;
   top:calc(env(safe-area-inset-top) + 6px);
