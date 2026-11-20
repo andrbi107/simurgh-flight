@@ -2,10 +2,10 @@
 
 > بازی پرواز/جاخالی‌دادن عمودی با تم اسطوره‌ای فارسی — سیمرغ از هفت وادی منطق‌الطیر به قاف پرواز می‌کند.
 
-[![Version](https://img.shields.io/badge/version-v0.0.3-blue)](https://github.com/andrbi107/simurgh-flight/releases/tag/v0.0.3) [![PWA](https://img.shields.io/badge/PWA-installable-purple)](https://andrbi107.github.io/simurgh-flight/) [![No deps](https://img.shields.io/badge/dependencies-none-success)](https://github.com/andrbi107/simurgh-flight) [![License](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
+[![Version](https://img.shields.io/badge/version-v0.0.4-blue)](https://github.com/andrbi107/simurgh-flight/releases/tag/v0.0.4) [![PWA](https://img.shields.io/badge/PWA-installable-purple)](https://andrbi107.github.io/simurgh-flight/) [![deps](https://img.shields.io/badge/deps-Howler.js_local-blueviolet)](https://github.com/andrbi107/simurgh-flight) [![License](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 
 🎮 **[بازی کن](https://andrbi107.github.io/simurgh-flight/)** — نسخه‌ی آنلاین روی GitHub Pages
-📦 **[مخزن گیت‌هاب](https://github.com/andrbi107/simurgh-flight)** · 🏷️ **[Release v0.0.3](https://github.com/andrbi107/simurgh-flight/releases/tag/v0.0.3)**
+📦 **[مخزن گیت‌هاب](https://github.com/andrbi107/simurgh-flight)** · 🏷️ **[Release v0.0.4](https://github.com/andrbi107/simurgh-flight/releases/tag/v0.0.4)**
 
 ---
 
@@ -17,7 +17,15 @@
 
 ---
 
-## تغییرات v0.0.3 (جدید)
+## تغییرات v0.0.4 (جدید)
+
+(v0.0.4 فقط کیت مشترک؛ گیم‌پلی v0.0.3 حفظ شد: جوی‌استیک لمسی).
+
+**همه‌ی بازی‌ها (v0.0.4)** — `gamekit.js` مشترک + `vendor/howler.min.js` محلی: صدای Howler با SFX خودکار (pickup/collision/game-over از طریق پل MUX)، صفحه‌ی **راهنما**، صفحه‌ی **تنظیمات** (قطع/وصل صدا)، قلاب‌های تست (`render_game_to_text`/`advanceTime`)، **فول‌اسکرین** (کلید F)، و سیستم **دستاوردها**. cache سرویس‌ورکر به v4 ارتقا یافت (آفلاین کامل با vendor).
+
+---
+
+## تغییرات v0.0.3
 
 **سیمرغ** — جوی‌استیک لمسی روی صفحه (موبایل) برای کنترل دقیق‌تر کاراکتر اضافه شد.
 
